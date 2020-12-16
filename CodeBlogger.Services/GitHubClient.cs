@@ -22,6 +22,13 @@ namespace CodeBlogger.Services
         Descending
     }
 
+    public enum VisibilityOptions
+    {
+        All,
+        Private,
+        Public
+    }
+
     public class GitHubClient
     {
         private readonly string _userName;
@@ -34,7 +41,7 @@ namespace CodeBlogger.Services
             _accessToken = accessToken;
             _api = RestService.For<IGitHubApi>("https://api.github.com", new RefitSettings()
             {
-                AuthorizationHeaderValueGetter = async () => await Task.FromResult($"token {_accessToken}"),
+                AuthorizationHeaderValueGetter = async () => await Task.FromResult(_accessToken),
                 ExceptionFactory = async (message) =>
                 {
                     if (!message.IsSuccessStatusCode)
@@ -48,11 +55,11 @@ namespace CodeBlogger.Services
             });
         }
 
-        public async Task<IReadOnlyList<Repository>> ListRepositoriesAsync(
+        public async Task<IReadOnlyList<Repository>> ListPublicRepositoriesAsync(
             RepoSortOptions sort = RepoSortOptions.Pushed, SortDirection direction = SortDirection.Descending, int page = 1) => 
             await _api.ListUserRepositoriesAsync(_userName, SortOptionText(sort), SortDirectionText(direction), page);
 
-        public async Task<IReadOnlyList<Repository>> ListAllRepositoriesAsync(
+        public async Task<IReadOnlyList<Repository>> ListAllPublicRepositoriesAsync(
             RepoSortOptions sort = RepoSortOptions.Pushed, SortDirection direction = SortDirection.Descending)
         {
             List<Repository> results = new List<Repository>();
@@ -61,13 +68,17 @@ namespace CodeBlogger.Services
             do
             {
                 page++;
-                var segment = await ListRepositoriesAsync(sort, direction, page);
+                var segment = await ListPublicRepositoriesAsync(sort, direction, page);
                 if (!segment.Any()) break;
                 results.AddRange(segment);
             } while (true);
 
             return results;
         }
+
+        public async Task<IReadOnlyList<Repository>> ListMyRepositoriesAsync(
+            RepoSortOptions sort = RepoSortOptions.Pushed, SortDirection direction = SortDirection.Descending, VisibilityOptions visibility = VisibilityOptions.All, int page = 1) =>
+            await _api.ListMyRepositories(SortOptionText(sort), SortDirectionText(direction), VisibilityText(visibility), page);
 
         public async Task<IReadOnlyList<CommitHeader>> ListCommitsAsync(string repoName, int page = 1) => await _api.ListCommitHeadersAsync(_userName, repoName, page);
 
@@ -82,5 +93,11 @@ namespace CodeBlogger.Services
             (direction == SortDirection.Ascending) ? "asc" :
             (direction == SortDirection.Descending) ? "desc" :
             throw new Exception($"Unknown sort direction {direction}");
+
+        private static string VisibilityText(VisibilityOptions visibility) =>
+            (visibility == VisibilityOptions.All) ? "all" :
+            (visibility == VisibilityOptions.Private) ? "private" :
+            (visibility == VisibilityOptions.Public) ? "public" :
+            throw new Exception($"Unknown visibility option: {visibility}");
     }        
 }

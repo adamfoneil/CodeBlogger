@@ -8,11 +8,19 @@ namespace CodeBlogger.Tests
     public class GitHubIntegration
     {
         [TestMethod]
-        public void ListAllRepos()
+        public void ListPublicRepos()
         {
             var token = GetConfig()["GitHub:AccessToken"];
             var client = new GitHubClient("adamfoneil", token);
-            var repos = client.ListAllRepositoriesAsync().Result;
+            var repos = client.ListAllPublicRepositoriesAsync().Result;
+        }
+
+        [TestMethod]
+        public void ListMyRepos()
+        {
+            var token = GetConfig()["GitHub:AccessToken"];
+            var client = new GitHubClient("adamfoneil", token);
+            var repos = client.ListMyRepositoriesAsync().Result;
         }
 
         [TestMethod]
@@ -20,7 +28,7 @@ namespace CodeBlogger.Tests
         {
             var token = GetConfig()["GitHub:AccessToken"];
             var client = new GitHubClient("adamfoneil", token);
-            var repos = client.ListRepositoriesAsync(RepoSortOptions.Pushed, SortDirection.Descending).Result;
+            var repos = client.ListPublicRepositoriesAsync(RepoSortOptions.Pushed, SortDirection.Descending).Result;
         }
 
         [TestMethod]
