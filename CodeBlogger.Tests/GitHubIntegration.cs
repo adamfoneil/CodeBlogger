@@ -29,10 +29,17 @@ namespace CodeBlogger.Tests
         }
 
         [TestMethod]
-        public void ListCommits()
+        public void ListPublicCommits()
         {
             var client = GetClient();
             var commits = client.ListCommitsAsync("Dapper.CX", 1).Result;
+        }
+
+        [TestMethod]
+        public void ListPrivateCommits()
+        {
+            var client = GetClient();
+            var commits = client.ListCommitsAsync("AerieHub4").Result;
         }
 
         private GitHubClient GetClient() => new GitHubClient(Config["GitHub:UserName"], Config["GitHub:AccessToken"]);
