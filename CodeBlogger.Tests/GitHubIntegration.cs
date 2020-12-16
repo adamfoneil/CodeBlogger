@@ -10,35 +10,33 @@ namespace CodeBlogger.Tests
         [TestMethod]
         public void ListPublicRepos()
         {
-            var token = GetConfig()["GitHub:AccessToken"];
-            var client = new GitHubClient("adamfoneil", token);
+            var client = GetClient();
             var repos = client.ListAllPublicRepositoriesAsync().Result;
         }
 
         [TestMethod]
         public void ListMyRepos()
         {
-            var token = GetConfig()["GitHub:AccessToken"];
-            var client = new GitHubClient("adamfoneil", token);
-            var repos = client.ListMyRepositoriesAsync().Result;
+            var client = GetClient();
+            var repos = client.ListMyRepositoriesAsync(visibility: VisibilityOptions.Private).Result;
         }
 
         [TestMethod]
         public void ListRecentRepos()
         {
-            var token = GetConfig()["GitHub:AccessToken"];
-            var client = new GitHubClient("adamfoneil", token);
+            var client = GetClient();
             var repos = client.ListPublicRepositoriesAsync(RepoSortOptions.Pushed, SortDirection.Descending).Result;
         }
 
         [TestMethod]
         public void ListCommits()
         {
-            var token = GetConfig()["GitHub:AccessToken"];
-            var client = new GitHubClient("adamfoneil", token);
+            var client = GetClient();
             var commits = client.ListCommitsAsync("Dapper.CX", 1).Result;
         }
 
-        private IConfiguration GetConfig() => new ConfigurationBuilder().AddJsonFile("Config/github.json").Build();
+        private GitHubClient GetClient() => new GitHubClient(Config["GitHub:UserName"], Config["GitHub:AccessToken"]);
+
+        private IConfiguration Config { get => new ConfigurationBuilder().AddJsonFile("Config/github.json").Build(); }
     }
 }
