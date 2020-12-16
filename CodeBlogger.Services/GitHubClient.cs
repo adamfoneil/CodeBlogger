@@ -8,6 +8,20 @@ using System.Threading.Tasks;
 
 namespace CodeBlogger.Services
 {
+    public enum RepoSortOptions
+    {
+        Created,
+        Updated,
+        Pushed,
+        FullName
+    }
+
+    public enum SortDirection
+    {
+        Ascending,
+        Descending
+    }
+
     public class GitHubClient
     {
         private readonly string _userName;
@@ -34,7 +48,12 @@ namespace CodeBlogger.Services
             });
         }
 
-        public async Task<IReadOnlyList<Repository>> ListUserRepositoriesAsync()
+        public async Task<IReadOnlyList<Repository>> ListRepositoriesAsync(
+            RepoSortOptions sort = RepoSortOptions.Pushed, SortDirection direction = SortDirection.Descending, int page = 1) => 
+            await _api.ListUserRepositoriesAsync(_userName, SortOptionText(sort), SortDirectionText(direction), page);
+
+        public async Task<IReadOnlyList<Repository>> ListAllRepositoriesAsync(
+            RepoSortOptions sort = RepoSortOptions.Pushed, SortDirection direction = SortDirection.Descending)
         {
             List<Repository> results = new List<Repository>();
             int page = 0;
@@ -42,12 +61,26 @@ namespace CodeBlogger.Services
             do
             {
                 page++;
-                var segment = await _api.ListUserRepositoriesAsync(_userName, page);
+                var segment = await ListRepositoriesAsync(sort, direction, page);
                 if (!segment.Any()) break;
                 results.AddRange(segment);
             } while (true);
 
             return results;
         }
-    }
+
+        public async Task<IReadOnlyList<CommitHeader>> ListCommitsAsync(string repoName, int page = 1) => await _api.ListCommitHeadersAsync(_userName, repoName, page);
+
+        private static string SortOptionText(RepoSortOptions sort) =>
+            (sort == RepoSortOptions.Created) ? "created" :
+            (sort == RepoSortOptions.FullName) ? "full_name" :
+            (sort == RepoSortOptions.Pushed) ? "pushed" :
+            (sort == RepoSortOptions.Updated) ? "updated" :
+            throw new Exception($"Unknown sort option {sort}");
+
+        private static string SortDirectionText(SortDirection direction) =>
+            (direction == SortDirection.Ascending) ? "asc" :
+            (direction == SortDirection.Descending) ? "desc" :
+            throw new Exception($"Unknown sort direction {direction}");
+    }        
 }
