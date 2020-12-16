@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CodeBlogger.Services.Interfaces
-{
+{        
+    [Headers("Authorization", "User-Agent: CodeBloggerAPI")]
     public interface IGitHubApi
     {
-        [Get("/repos/{userName}")]
-        Task<IReadOnlyList<Repository>> GetRepositoriesAsync(string userName, string accessToken);
+        [Get("/users/{userName}/repos?page={page}")]
+        Task<IReadOnlyList<Repository>> ListUserRepositoriesAsync(string userName, int page = 1);
     }
 }

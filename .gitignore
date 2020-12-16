@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/CodeBlogger.App/Config/github.json
+/CodeBlogger.Tests/Config/github.json
