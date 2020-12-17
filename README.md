@@ -12,4 +12,4 @@ I wanted more practice using Refit because there are some slightly tricky things
 
 ![img](https://adamosoftware.blob.core.windows.net/images/github-api-config.png)
 
-The config content is accessed through this [Config](https://github.com/adamfoneil/GitHubApi/blob/master/GitHubApi.Tests/GitHubIntegration.cs#L47) property, and then I have a [factory method](https://github.com/adamfoneil/GitHubApi/blob/master/GitHubApi.Tests/GitHubIntegration.cs#L45) for my client object that uses this configuration.
+The config content is accessed through this [Config](https://github.com/adamfoneil/GitHubApi/blob/master/GitHubApi.Tests/GitHubIntegration.cs#L47) property, and then I have a [factory method](https://github.com/adamfoneil/GitHubApi/blob/master/GitHubApi.Tests/GitHubIntegration.cs#L45) for my client object that uses this configuration. Also note that I use a couple hard-coded repo names that are not likely to work for you without changes, so bear that in mind.
