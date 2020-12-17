@@ -29,11 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\GitHubClient.Library\GitHubClient.Library.csproj" />
+    <ProjectReference Include="..\GitHubApi.Library\GitHubApi.Library.csproj" />
   </ItemGroup>
 
 </Project>
