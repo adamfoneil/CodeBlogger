@@ -29,11 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeBlogger.Services\CodeBlogger.Services.csproj" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\GitHubClient.Library\GitHubClient.Library.csproj" />
   </ItemGroup>
 
 </Project>

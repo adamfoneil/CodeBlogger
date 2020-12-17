@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 /CodeBlogger.App/Config/github.json
 /CodeBlogger.Tests/Config/github.json
+/GitHubClient.Tests/Config/github.json

@@ -1,12 +1,12 @@
-﻿using CodeBlogger.Services.Interfaces;
-using CodeBlogger.Services.Models;
+﻿using GitHubApi.Interfaces;
+using GitHubApi.Models;
 using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CodeBlogger.Services
+namespace GitHubApi
 {
     public enum RepoSortOptions
     {
@@ -29,13 +29,13 @@ namespace CodeBlogger.Services
         Public
     }
 
-    public class GitHubClient
+    public class GitHubApiClient
     {
         private readonly string _userName;
         private readonly string _accessToken;
         private readonly IGitHubApi _api;
 
-        public GitHubClient(string userName, string accessToken)
+        public GitHubApiClient(string userName, string accessToken)
         {
             _userName = userName;
             _accessToken = accessToken;

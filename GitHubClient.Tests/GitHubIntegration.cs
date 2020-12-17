@@ -1,4 +1,4 @@
-using CodeBlogger.Services;
+using GitHubApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -42,7 +42,7 @@ namespace CodeBlogger.Tests
             var commits = client.ListCommitsAsync("AerieHub4").Result;
         }
 
-        private GitHubClient GetClient() => new GitHubClient(Config["GitHub:UserName"], Config["GitHub:AccessToken"]);
+        private GitHubApiClient GetClient() => new GitHubApiClient(Config["GitHub:UserName"], Config["GitHub:AccessToken"]);
 
         private IConfiguration Config { get => new ConfigurationBuilder().AddJsonFile("Config/github.json").Build(); }
     }
