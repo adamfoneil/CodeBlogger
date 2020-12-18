@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GitHubApi.Library\GitHubApi.Library.csproj" />
+    <ProjectReference Include="..\MicropubApi.Library\MicropubApi.Library.csproj" />
   </ItemGroup>
 
   <ItemGroup>

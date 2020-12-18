@@ -3,7 +3,7 @@ using GitHubApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CodeBlogger.Tests
+namespace Api.Tests
 {
     [TestClass]
     public class GitHubIntegration
