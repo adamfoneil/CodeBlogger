@@ -1,4 +1,5 @@
-﻿using MicropubApi.Internal.Models;
+﻿using MicropubApi.Internal.Requests;
+using MicropubApi.Library.Internal.Responses;
 using Refit;
 using System.Threading.Tasks;
 
@@ -8,6 +9,9 @@ namespace MicropubApi.Internal.Interfaces
     internal interface IMicropubApi
     {
         [Post("/micropub")]
-        Task AddPostAsync([Body]InternalEntry entry);
+        Task<NewEntry> AddPostAsync([Query]InternalEntry entry);
+
+        [Post("/micropub?action=delete&url={url}")]
+        Task DeletePostAsync(string url);
     }
 }

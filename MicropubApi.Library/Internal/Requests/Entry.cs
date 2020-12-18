@@ -1,7 +1,7 @@
 ﻿using MicropubApi.Library.Models;
 using Refit;
 
-namespace MicropubApi.Internal.Models
+namespace MicropubApi.Internal.Requests
 {
     internal class InternalEntry
     {
@@ -12,7 +12,7 @@ namespace MicropubApi.Internal.Models
         [AliasAs("post-status")]
         public string PostStatus { get; set; }
 
-        internal static InternalEntry FromEntry(Entry entry) => new InternalEntry()
+        internal static InternalEntry FromEntry(NewEntry entry) => new InternalEntry()
         {
             Name = entry.Title,
             Content = entry.Body,
