@@ -32,4 +32,10 @@
     <ProjectReference Include="..\GitHubApi.Library\GitHubApi.Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Config\micro.blog.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

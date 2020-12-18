@@ -342,3 +342,6 @@ healthchecksdb
 /CodeBlogger.Tests/Config/github.json
 /GitHubClient.Tests/Config/github.json
 /GitHubApi.Tests/Config/github.json
+/GitHubApi.Tests/Config/micro.blog.json
+/Api.Tests/Config/github.json
+/Api.Tests/Config/micro.blog.json
