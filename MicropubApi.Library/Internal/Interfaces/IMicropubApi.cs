@@ -8,7 +8,7 @@ namespace MicropubApi.Internal.Interfaces
     [Headers("Authorization: Bearer")]
     internal interface IMicropubApi
     {
-        [Post("/micropub")]
+        [Post("/micropub?h=entry")]
         Task<NewEntry> AddPostAsync([Query]InternalEntry entry);
 
         [Post("/micropub?action=delete&url={url}")]
